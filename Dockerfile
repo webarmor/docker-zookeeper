@@ -1,12 +1,15 @@
 # Dockerfile for ZooKeeper
+# Based on git@github.com:signalfuse/docker-zookeeper.git
+# MAINTAINER Maxime Petazzoni <max@signalfuse.com>
 
-FROM quay.io/signalfuse/maestro-base:14.04-0.1.8.1
-MAINTAINER Maxime Petazzoni <max@signalfuse.com>
+FROM webarmor/common
+MAINTAINER Webarmor <devops@immun.io>
 
 # Get latest stable release of ZooKeeper
-RUN wget -q -O - http://mirrors.sonic.net/apache/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz \
+RUN wget -q -O - http://archive.immun.io.s3.amazonaws.com/zookeeper-3.4.6.tar.gz \
   | tar -C /opt -xz
 
+RUN pip install maestro==0.2.0
 ADD run.py /opt/zookeeper-3.4.6/.docker/
 
 WORKDIR /opt/zookeeper-3.4.6/
